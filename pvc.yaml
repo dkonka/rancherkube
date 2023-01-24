@@ -1,0 +1,60 @@
+apiVersion: v1
+
+kind: PersistentVolume
+
+metadata:
+
+  name: pv-nfs-data-prom
+
+  namespace: monitoring
+
+  labels:
+
+    type: local
+
+    app: prometheus-deployment
+
+spec:
+
+  storageClassName: manual
+
+  capacity:
+
+    storage: 500Mi
+
+  accessModes:
+
+    - ReadWriteMany
+
+  hostPath:
+    path: "/mnt/nfs/promdata"
+
+---
+
+apiVersion: v1
+
+kind: PersistentVolumeClaim
+
+metadata:
+
+  name: pvc-nfs-data-prom
+
+  namespace: monitoring
+
+  labels:
+
+    app: prometheus-deployment
+
+spec:
+
+  storageClassName: manual
+
+  accessModes:
+
+    - ReadWriteMany
+
+  resources:
+
+    requests:
+
+      storage: 500Mi
